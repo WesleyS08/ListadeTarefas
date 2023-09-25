@@ -1,0 +1,38 @@
+<!doctype html>
+<html th:replace="~{base :: layout (~{::title}, ~{::main})}">
+  <head>
+    <title>
+      <th:block th:unless="${todo.id}">Nova</th:block>
+      <th:block th:if="${todo.id}">Editar</th:block>
+    </title>
+  </head>
+  <body>
+    <main>
+
+      <h1> Nova Tarefa  </h1>
+        <span th:unless="${todo.id}"></span>
+        <span th:if="${todo.id}">Editar</span>
+
+
+      <form method="POST" th:object="${todo}">
+        <input type="hidden" th:field="*{id}">
+        <div class="form__group field">
+          <input type="text" class="form__field" id="title" placeholder="Título" th:field="*{title}" required="">
+          <label for="title" class="form__label">Título</label>
+        </div>
+        <ul>
+          <li th:each="error : ${#fields.errors('title')}" th:text="${error}" class="text-danger"></li>
+        </ul>
+
+        <div class="form__group">
+          <input type="date" class="form__field" id="deadline" th:field="*{deadline}" required>
+          <label for="deadline" class="form__label">Data de entrega</label>
+        </div>
+
+        <button type="submit" class="button button-adicionar">
+          <span class="btn-txt">Salvar</span>
+        </button>
+      </form>
+    </main>
+  </body>
+</html>
